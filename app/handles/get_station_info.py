@@ -2,7 +2,7 @@ import aiohttp
 
 # i should to change this file it is so bad
 
-async def get_id(station_json): # json is so strange so i have to use this function 
+async def get_id(station_json): # json of this API is so strange so i have to use this function 
     first_key, _ = next(iter(station_json.items()))
     return first_key
 
