@@ -1,5 +1,4 @@
-import asyncio
-import datetime
+
 import aiohttp
 
 from handles import get_location, generator
