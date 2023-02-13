@@ -1,6 +1,5 @@
 import os
 from telethon import TelegramClient, events
-import config # U have to create this file with TELEGRAM_API_ID, TELEGRAM_API_HASH, BOT_TOKEN
 
 from handles import get_station_info, check_journey, encoder, refresh
 TELEGRAM_ID = os.getenv('TELEGRAM_API_ID', 'None')
