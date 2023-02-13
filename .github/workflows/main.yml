@@ -57,7 +57,5 @@ jobs:
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
         task-definition: my_task_definition.json
-        container-name: Main
-        image: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
         cluster: ${{ env.CLUSTER_NAME }}
         task-family: ${{ env.TASK_FAMILY }}
