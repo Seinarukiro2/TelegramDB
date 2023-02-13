@@ -52,8 +52,8 @@ jobs:
         BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
         ECR_REPOSITORY: tele_bahn_demo
         IMAGE_TAG: tele_bahn_image
-        CLUSTER_NAME: my-ecs-cluster
-        TASK_FAMILY: my-ecs-task
+        CLUSTER_NAME: Main
+        TASK_FAMILY: seinaru
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
         task-definition: my_task_definition.json
