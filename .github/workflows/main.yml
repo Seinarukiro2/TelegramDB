@@ -43,3 +43,21 @@ jobs:
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+    - name: Deploy task definition to Amazon ECS
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
+        TELEGRAM_API_HASH: ${{ secrets.TELEGRAM_API_HASH }}
+        BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+        ECR_REPOSITORY: tele_bahn_demo
+        IMAGE_TAG: tele_bahn_image
+        CLUSTER_NAME: my-ecs-cluster
+        TASK_FAMILY: my-ecs-task
+      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      with:
+        task-definition: my_task_definition.json
+        container-name: Main
+        image: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
+        cluster: ${{ env.CLUSTER_NAME }}
+        task-family: ${{ env.TASK_FAMILY }}
