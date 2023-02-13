@@ -3,10 +3,11 @@ from telethon import TelegramClient, events
 import config # U have to create this file with TELEGRAM_API_ID, TELEGRAM_API_HASH, BOT_TOKEN
 
 from handles import get_station_info, check_journey, encoder, refresh
-
-
+TELEGRAM_ID = os.getenv('TELEGRAM_API_ID', 'None')
+TELEGRAM_API = os.getenv('TELEGRAM_API_HASH', 'None')
+TOKEN = os.getenv('BOT_TOKEN', 'None')
 # api connection
-client = TelegramClient('bot', config.TELEGRAM_API_ID, config.TELEGRAM_API_HASH) 
+client = TelegramClient('bot', TELEGRAM_ID, TELEGRAM_API) 
 client.parse_mode = "html"
 
 async def handle_command(event):
@@ -33,5 +34,5 @@ async def handle_command(event):
 async def handler(event):
     await handle_command(event)
 
-client.start(bot_token=config.BOT_TOKEN)
+client.start(bot_token=TOKEN)
 client.run_until_disconnected()
