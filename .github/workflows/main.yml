@@ -15,7 +15,7 @@ on:
       - main
 
 env:
-  AWS_REGION: eu-central-1                   # set this to your preferred AWS region, e.g. us-west-1
+  AWS_REGION: eu-west-1                   # set this to your preferred AWS region, e.g. us-west-1
   ECR_REPOSITORY: tele_bahn_demo          # set this to your Amazon ECR repository name
   ECS_SERVICE: DBService                 # set this to your Amazon ECS service name
   ECS_CLUSTER: DBCluster                 # set this to your Amazon ECS cluster name
