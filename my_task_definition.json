@@ -1,10 +1,10 @@
 {
     "taskDefinitionArn": "arn:aws:ecs:us-east-1:616457750811:task-definition/sample-fargate:1",
+    "executionRoleArn": "ecsTaskExecutionRole",
     "containerDefinitions": [{
         "name": "fargate-app",
         "image": "public.ecr.aws/docker/library/httpd:latest",
-        "taskRoleArn": "arn:aws:iam::616457750811:role/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS",
-        "executionRoleArn": "ecsTaskExecutionRole",
+
         "cpu": 0,
         "portMappings": [{
             "containerPort": 80,
