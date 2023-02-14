@@ -1,5 +1,6 @@
 {
     "taskDefinitionArn": "arn:aws:ecs:eu-west-1:616457750811:task-definition/sample-fargate:1",
+    "executionRoleArn": "DBRole",
     "containerDefinitions": [{
         "name": "fargate-app",
         "image": "public.ecr.aws/docker/library/httpd:latest",
