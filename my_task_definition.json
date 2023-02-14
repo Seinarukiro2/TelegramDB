@@ -22,6 +22,8 @@
         "volumesFrom": []
     }],
     "family": "sample-fargate",
+    "taskRoleArn": "arn:aws:iam::616457750811:role/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS",
+    "executionRoleArn": "ecsTaskExecutionRole",
     "networkMode": "awsvpc",
     "revision": 1,
     "volumes": [],
