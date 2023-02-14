@@ -1,10 +1,9 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:us-east-1:616457750811:task-definition/sample-fargate:1",
+    "taskDefinitionArn": "arn:aws:ecs:eu-west-1:616457750811:task-definition/sample-fargate:1",
     "executionRoleArn": "ecsTaskExecutionRole",
     "containerDefinitions": [{
         "name": "fargate-app",
         "image": "public.ecr.aws/docker/library/httpd:latest",
-
         "cpu": 0,
         "portMappings": [{
             "containerPort": 80,
@@ -45,7 +44,7 @@
     ],
     "cpu": "256",
     "memory": "512",
-    "registeredAt": "2023-02-14T15:52:03.855Z",
+    "registeredAt": "2023-02-14T18:18:13.677Z",
     "registeredBy": "arn:aws:iam::616457750811:root",
     "tags": []
 }
