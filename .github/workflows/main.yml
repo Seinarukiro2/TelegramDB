@@ -9,6 +9,10 @@ jobs:
     env:
       IMAGE_NAME: DeutscheBahnImage
       PROJECT_ID: formidable-era-377915 
+      BOT_TOKEN: BOT_TOKEN
+      TELEGRAM_API_HASH: TELEGRAM_API_HASH
+      TELEGRAM_API_ID: TELEGRAM_API_ID
+      
     steps:
     - name: Checkout
       uses: actions/checkout@v2
