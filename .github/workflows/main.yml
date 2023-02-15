@@ -1,74 +1,49 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
-# GitHub recommends pinning actions to a commit SHA.
-# To get a newer version, you will need to update the SHA.
-# You can also reference a tag or branch, but the action may change without warning.
-
-name: Deploy to Amazon ECS
-
+name: Build
 on:
   push:
-    branches:
-      - main
-
-env:
-  AWS_REGION: eu-central-1                   # set this to your preferred AWS region, e.g. us-west-1         
-  ECS_SERVICE: app_service                 # set this to your Amazon ECS service name
-  ECS_CLUSTER: app_cluster                 # set this to your Amazon ECS cluster name
-  ECS_TASK_DEFINITION: .github/workflows/td.json # set this to the path to your Amazon ECS task definition
-                                               # file, e.g. .aws/task-definition.json
-  CONTAINER_NAME: app         # set this to the name of the container in the
-                                               # containerDefinitions section of your task definition
-  TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
-  TELEGRAM_API_HASH: ${{ secrets.TELEGRAM_API_HASH }}
-  BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+    branches: [ main ]
 jobs:
-  deploy:
-    name: Deploy
+  build-push-gcr:
+    name: Build and Push to GCP
     runs-on: ubuntu-latest
-    environment: production
-
+    env:
+      IMAGE_NAME: DeutscheBahnImage
+      PROJECT_ID: formidable-era-377915 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@13d241b293754004c80624b5567555c4a39ffbe3
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
-
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-
-      - name: Build, tag, and push image to Amazon ECR
-        id: build-image
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: "app_repo"
-          IMAGE_TAG: latest
-        run: | 
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
-
-      - name: Fill in the new image ID in the Amazon ECS task definition
-        id: task-def-1
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
-        with:
-          task-definition: ${{ env.ECS_TASK_DEFINITION }}
-          container-name: ${{ env.CONTAINER_NAME }}
-          image: ${{ steps.build-image.outputs.image }}
-
-      - name: Deploy Amazon ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-        with:
-          task-definition: ${{ steps.task-def-1.outputs.task-definition }}
-          service: ${{ env.ECS_SERVICE }}
-          cluster: ${{ env.ECS_CLUSTER }}
-          wait-for-service-stability: false
+    - name: Checkout
+      uses: actions/checkout@v2
+    
+    - uses: google-github-actions/setup-gcloud@master
+      with:
+        service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
+        project_id: ${{ env.PROJECT_ID }}
+        export_default_credetials: true
+        
+    - name: Build docker image
+      run: docker bulid -t $IMAGE_NAMW:latest .
+    
+    - name: Automatic Tagging of Releases
+      id: increment-git-tag
+      run: |
+        bash ./scripts/git_update.sh -v major
+    - name: Configure Docker Client
+      run: |-
+        gcloud auth configure-docker --quiet
+        gcloud auth configure-docker us-west2-docker.pkg.dev --quiet
+    - name: Push Docker Image to Container Registry (GCR)
+      env:
+        GIT_TAG: ${{ steps.increment-git-tag.outputs.git-tag }}
+      run: |-
+        docker tag $IMAGE_NAME:latest gcr.io/$PROJECT_ID/$IMAGE_NAME:latest
+        docker tag $IMAGE_NAME:latest gcr.io/$PROJECT_ID/$IMAGE_NAME:$GIT_TAG
+        docker push gcr.io/$PROJECT_ID/$IMAGE_NAME:latest
+        docker push gcr.io/$PROJECT_ID/$IMAGE_NAME:$GIT_TAG
+    - name: Push Docker Image to Artifact Registry
+      env:
+        GIT_TAG: ${{ steps.increment-git-tag.outputs.git-tag }}
+      run: |-
+        docker tag $IMAGE_NAME:latest us-west2-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:latest
+        docker tag $IMAGE_NAME:latest us-west2-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:$GIT_TAG
+        docker push us-west2-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:latest
+        docker push us-west2-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:$GIT_TAG
+      
