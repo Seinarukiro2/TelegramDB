@@ -24,7 +24,7 @@ jobs:
         export_default_credetials: true
         
     - name: Build docker image
-      run: docker bulid -t $IMAGE_NAMW:latest .
+      run: docker build -t $IMAGE_NAME:latest .
     
     - name: Automatic Tagging of Releases
       id: increment-git-tag
