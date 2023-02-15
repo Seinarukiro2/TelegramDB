@@ -7,7 +7,7 @@ jobs:
     name: Build and Push to GCP
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: DeutscheBahnImage
+      IMAGE_NAME: deutschebahnimage
       PROJECT_ID: formidable-era-377915 
       BOT_TOKEN: BOT_TOKEN
       TELEGRAM_API_HASH: TELEGRAM_API_HASH
