@@ -22,7 +22,9 @@ env:
                                                # file, e.g. .aws/task-definition.json
   CONTAINER_NAME: app         # set this to the name of the container in the
                                                # containerDefinitions section of your task definition
-
+  TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
+  TELEGRAM_API_HASH: ${{ secrets.TELEGRAM_API_HASH }}
+  BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
 jobs:
   deploy:
     name: Deploy
