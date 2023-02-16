@@ -28,7 +28,7 @@ Setup my-project with main.py
     	python app/main.py
 ```
     
-## Screenshots
+## Bot commands
 - Start bot - `/start` 
 - Get journey info - `! city1 city2` 
 ![App Screenshot](https://i.imgur.com/WSpvWgE.png)
