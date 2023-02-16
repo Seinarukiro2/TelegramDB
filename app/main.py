@@ -2,12 +2,10 @@ import os
 from telethon import TelegramClient, events
 
 from handles import get_station_info, check_journey, encoder, refresh
-# TELEGRAM_ID = os.environ.get('TELEGRAM_API_ID')
-# TELEGRAM_API = os.environ.get('TELEGRAM_API_HASH')
-# TOKEN = os.environ.get('BOT_TOKEN')
-TELEGRAM_API_ID = 7248451
-TELEGRAM_API_HASH = 'db9b16eff233ee8dfd7c218138cb2e10'
-BOT_TOKEN = '6228995316:AAEoSOXDu2tLYSHWMx04OWy2bnsksoKdnFE'
+TELEGRAM_API_ID = os.environ.get('TELEGRAM_API_ID')
+TELEGRAM_API_HASH = os.environ.get('TELEGRAM_API_HASH')
+TOKEN = os.environ.get('BOT_TOKEN')
+
 # api connection
 client = TelegramClient('bot', TELEGRAM_API_ID, TELEGRAM_API_HASH) 
 client.parse_mode = "html"
@@ -36,5 +34,5 @@ async def handle_command(event):
 async def handler(event):
     await handle_command(event)
 
-client.start(bot_token=BOT_TOKEN)
+client.start(bot_token=TOKEN)
 client.run_until_disconnected()
