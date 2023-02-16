@@ -36,5 +36,5 @@ async def handle_command(event):
 async def handler(event):
     await handle_command(event)
 
-client.start(bot_token=TOKEN)
+client.start(bot_token=BOT_TOKEN)
 client.run_until_disconnected()
