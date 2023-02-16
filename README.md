@@ -24,8 +24,8 @@ Setup my-project with docker-compose
 Setup my-project with main.py
 
 ```bash
-    pip install -r requirements.txt
-    python app/main.py
+    	pip install -r requirements.txt
+    	python app/main.py
 ```
     
 ## Screenshots
