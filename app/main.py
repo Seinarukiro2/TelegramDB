@@ -9,7 +9,7 @@ TELEGRAM_API_ID = 7248451
 TELEGRAM_API_HASH = 'db9b16eff233ee8dfd7c218138cb2e10'
 BOT_TOKEN = '6228995316:AAEoSOXDu2tLYSHWMx04OWy2bnsksoKdnFE'
 # api connection
-client = TelegramClient('bot', TELEGRAM_ID, TELEGRAM_API) 
+client = TelegramClient('bot', TELEGRAM_API_ID, TELEGRAM_API_HASH) 
 client.parse_mode = "html"
 
 async def handle_command(event):
