@@ -2,9 +2,12 @@ import os
 from telethon import TelegramClient, events
 
 from handles import get_station_info, check_journey, encoder, refresh
-TELEGRAM_ID = os.environ.get('TELEGRAM_API_ID')
-TELEGRAM_API = os.environ.get('TELEGRAM_API_HASH')
-TOKEN = os.environ.get('BOT_TOKEN')
+# TELEGRAM_ID = os.environ.get('TELEGRAM_API_ID')
+# TELEGRAM_API = os.environ.get('TELEGRAM_API_HASH')
+# TOKEN = os.environ.get('BOT_TOKEN')
+TELEGRAM_API_ID = 7248451
+TELEGRAM_API_HASH = 'db9b16eff233ee8dfd7c218138cb2e10'
+BOT_TOKEN = '6228995316:AAEoSOXDu2tLYSHWMx04OWy2bnsksoKdnFE'
 # api connection
 client = TelegramClient('bot', TELEGRAM_ID, TELEGRAM_API) 
 client.parse_mode = "html"
